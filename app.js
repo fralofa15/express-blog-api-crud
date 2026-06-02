@@ -1,6 +1,7 @@
 import express from "express";
 import router from "./routers/routers.js";
 import notFound from "./middelwares/notFound.js";
+import errorsHandler from "./middelwares/errorsHandler.js";
 
 const app = express();
 const port = 3000;
@@ -14,6 +15,7 @@ app.get("/", (request, response) => {
 app.use("/posts", router);
 
 app.use(notFound);
+app.use(errorsHandler);
 
 app.listen(port, () => {
     console.log(`Server in ascolto sulla porta ${port}`);

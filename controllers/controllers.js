@@ -54,53 +54,11 @@ function index(request, response) {
 }
 
 function show(request, response) {
-    const id = parseInt(request.params.id);
-
-    if (isNaN(id) || id <= 0) {
-        response.status(400).json({
-            error: "Id non valido"
-        });
-
-        return;
-    }
-
-    const post = posts.find((post) => {
-        return post.id === id;
-    });
-
-    if (post === undefined) {
-        response.status(404).json({
-            error: "Post non trovato"
-        });
-
-        return;
-    }
-
-    response.status(200).json(post);
+    response.status(200).json(request.post);
 }
 
 function destroy(request, response) {
-    const id = parseInt(request.params.id);
-
-    if (isNaN(id) || id <= 0) {
-        response.status(400).json({
-            error: "Id non valido"
-        });
-
-        return;
-    }
-
-    const postIndex = posts.findIndex((post) => {
-        return post.id === id;
-    });
-
-    if (postIndex === -1) {
-        response.status(404).json({
-            error: "Post non trovato"
-        });
-
-        return;
-    }
+    const postIndex = posts.indexOf(request.post);
 
     posts.splice(postIndex, 1);
 
@@ -138,27 +96,7 @@ function store(request, response) {
 }
 
 function update(request, response) {
-    const id = parseInt(request.params.id);
-
-    if (isNaN(id) || id <= 0) {
-        response.status(400).json({
-            error: "Id non valido"
-        });
-
-        return;
-    }
-
-    const post = posts.find((post) => {
-        return post.id === id;
-    });
-
-    if (post === undefined) {
-        response.status(404).json({
-            error: "Post non trovato"
-        });
-
-        return;
-    }
+    const post = request.post;
 
     const updatedPost = request.body;
 
